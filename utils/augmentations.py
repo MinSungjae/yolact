@@ -5,6 +5,8 @@ import numpy as np
 import types
 from numpy import random
 from math import sqrt
+import warnings
+warnings.filterwarnings("ignore", category=np.VisibleDeprecationWarning)
 
 from data import cfg, MEANS, STD
 

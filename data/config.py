@@ -173,6 +173,20 @@ pascal_sbd_dataset = dataset_base.copy({
 })
 
 
+# --------------------- CUSTOM DATASETS --------------------------- #
+cig_cockpit_dataset = dataset_base.copy({
+    'name': 'Cockpit N1',
+
+    'train_images': './data/train/images/',
+    'valid_images': './data/train/images/',
+
+    'train_info': './data/train/trainval.json',
+    'valid_info': './data/train/trainval.json',
+
+    'class_names': ('MAGNETOS', 'MASTER', 'BRAKE', 'FUEL', 'BEACON'),
+    'label_map' : {3: 1, 4: 2, 1: 3, 2: 4, 0: 5}
+})
+
 
 
 
@@ -758,6 +772,24 @@ yolact_resnet50_pascal_config = yolact_resnet50_config.copy({
     'dataset': pascal_sbd_dataset,
     'num_classes': len(pascal_sbd_dataset.class_names) + 1,
 
+    'max_iter': 120000,
+    'lr_steps': (60000, 100000),
+    
+    'backbone': yolact_resnet50_config.backbone.copy({
+        'pred_scales': [[32], [64], [128], [256], [512]],
+        'use_square_anchors': False,
+    })
+})
+
+# CUSTOM 
+yolact_resnet50_cig_cockpit_config = yolact_resnet50_config.copy({
+    'name': 'yolact_resnet50_pascal', # Will default to yolact_resnet50_pascal
+    
+    # Dataset stuff
+    'dataset': cig_cockpit_dataset,
+    'num_classes': len(cig_cockpit_dataset.class_names) + 1,
+
+    'max_size' : 640,
     'max_iter': 120000,
     'lr_steps': (60000, 100000),
     
